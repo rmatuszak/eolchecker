@@ -1,0 +1,9 @@
+# For use with pre-commit.
+# See usage instructions at https://pre-commit.com
+-   id: eol-checker
+    name: eol-checker
+    description: Hook for checking proper line endings
+    entry: eol-checker
+    language: python
+    args: [--eol="lf"]
+    types: [text]

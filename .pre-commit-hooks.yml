@@ -1,6 +1,0 @@
-- id: eol-checker
-  name: Checks end of lines.
-  description: Checks end of lines, basing on passed filter.
-  entry: eol-checker
-  language: python
-  types: [text]

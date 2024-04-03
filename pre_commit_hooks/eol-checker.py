@@ -35,7 +35,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         '-e', '--eol',
         choices=('crlf', 'lf','cr'),
         default='lf',
-        help='Specifies the line ending to expect in file lines. Default is LF.',
+        help='Specifies the line ending to expect in files. Default is LF.',
     )
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
