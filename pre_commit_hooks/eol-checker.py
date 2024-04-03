@@ -24,10 +24,10 @@ def check_eol(filename: str, expected_eol: str) -> int:
     if not_expected > 0:
         print(f"{filename} didn't pass check! Lines to fix:")
         print(lines_to_fix)
-        return -1
+        return True
     else:
         print("All checks passed!")
-        return 0
+        return False,
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
@@ -37,11 +37,15 @@ def main(argv: Sequence[str] | None = None) -> int:
         default='lf',
         help='Specifies the line ending to expect in files. Default is LF.',
     )
-    parser.add_argument('filenames', nargs='*', help='Filenames to fix')
+    parser.add_argument('filenames', nargs='*', help='Filenames to check')
     args = parser.parse_args(argv)
 
+    hook_ret = 0
     for filename in args.filenames:
-        check_eol(filename, args.eol)
+        res = check_eol(filename, args.eol)
+        if res:
+            hook_ret = -1
+    return hook_ret
 
 if __name__ == '__main__':
     raise SystemExit(main())
