@@ -5,7 +5,7 @@ import os
 import sys
 from typing import Sequence
 
-ACCEPTED_EOLS = ["LF","CRLF","CR"]
+ACCEPTED_EOLS = ["lf","crlf","cr"]
 
 def check_eol(filename: str, expected_eol: str) -> int:
     with open(filename, 'rb') as f:
