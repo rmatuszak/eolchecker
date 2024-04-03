@@ -5,17 +5,21 @@ import os
 import sys
 from typing import Sequence
 
-ACCEPTED_EOLS = ["lf","crlf","cr"]
+CRLF = b'\r\n'
+LF = b'\n'
+CR = b'\r'
+ACCEPTED_EOLS = {'cr': CR, 'crlf': CRLF, 'lf': LF}
 
-def check_eol(filename: str, expected_eol: str) -> int:
+
+def check_eol(filename: str, expected_eol: str) -> bool:
     with open(filename, 'rb') as f:
         contents = f.read()
 
     not_expected=0
     lines_to_fix=[]
-    if expected_eol in ACCEPTED_EOLS:
+    if expected_eol in ACCEPTED_EOLS.keys():
         for idx,line in enumerate(contents.splitlines(True)):
-            if not line.endswith(expected_eol):
+            if not line.endswith(ACCEPTED_EOLS[expected_eol]):
                 not_expected += 1
                 lines_to_fix.append(f"{filename} {idx}: {line}")
     else:
