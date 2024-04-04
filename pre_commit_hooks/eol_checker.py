@@ -29,7 +29,7 @@ def check_eol(filename: str, expected_eol: str) -> bool:
     else:
         return False, lines_to_fix
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv=None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-e', '--eol',
@@ -50,7 +50,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     # all results printing should happen here, after main for loop
     if hook_ret != 0:
-        print("Not all files passed chek.")
+        print("Not all files passed check.")
         for f,l in files_to_check.items():
             print(f"File {f}: ")
             for e in l:
