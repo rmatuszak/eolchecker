@@ -10,7 +10,6 @@ LF = b'\n'
 CR = b'\r'
 ACCEPTED_EOLS = {'cr': CR, 'crlf': CRLF, 'lf': LF}
 
-
 def check_eol(filename: str, expected_eol: str) -> bool:
     with open(filename, 'rb') as f:
         contents = f.read()
@@ -21,7 +20,7 @@ def check_eol(filename: str, expected_eol: str) -> bool:
         for idx,line in enumerate(contents.splitlines(True)):
             if not line.endswith(ACCEPTED_EOLS[expected_eol]):
                 not_expected += 1
-                lines_to_fix.append(f"{filename} {idx}: {line}")
+                lines_to_fix.append(f"{idx}: {line}")
     else:
         raise "Error! Presented EOL is not in the list of available to parse EOLs! Exiting."
 
@@ -48,6 +47,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         if res:
             files_to_check.update({filename:lines})
             hook_ret = -1
+
     # all results printing should happen here, after main for loop
     if hook_ret != 0:
         print("Not all files passed chek.")
