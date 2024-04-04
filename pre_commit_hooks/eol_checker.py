@@ -26,11 +26,8 @@ def check_eol(filename: str, expected_eol: str) -> bool:
         raise "Error! Presented EOL is not in the list of available to parse EOLs! Exiting."
 
     if not_expected > 0:
-        print(f"{filename} didn't pass check! Lines to fix:")
-        # print(lines_to_fix)
         return True, lines_to_fix
     else:
-        # print("All checks passed!")
         return False, lines_to_fix
 
 def main(argv: Sequence[str] | None = None) -> int:
