@@ -29,7 +29,7 @@ def check_eol(filename: str, expected_eol: str) -> bool:
     else:
         return False, lines_to_fix
 
-def main(argv=None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-e', '--eol',
@@ -60,4 +60,4 @@ def main(argv=None) -> int:
     return hook_ret
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1:]))
+    raise SystemExit(main())
