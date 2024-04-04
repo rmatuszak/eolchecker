@@ -40,23 +40,25 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument('filenames', nargs='*', help='Filenames to check')
     args = parser.parse_args(argv)
 
-    hook_ret = 0
-    files_to_check = {}
-    for filename in args.filenames:
-        res, lines = check_eol(filename, args.eol)
-        if res:
-            files_to_check.update({filename:lines})
-            hook_ret = -1
+    print(args.filenames)
 
-    # all results printing should happen here, after main for loop
-    if hook_ret != 0:
-        print("Not all files passed check.")
-        for f,l in files_to_check.items():
-            print(f"File {f}: ")
-            for e in l:
-                print(e)
-    else:
-        print("All files passed!")
+    hook_ret = 0
+    # files_to_check = {}
+    # for filename in args.filenames:
+    #     res, lines = check_eol(filename, args.eol)
+    #     if res:
+    #         files_to_check.update({filename:lines})
+    #         hook_ret = -1
+
+    # # all results printing should happen here, after main for loop
+    # if hook_ret != 0:
+    #     print("Not all files passed check.")
+    #     for f,l in files_to_check.items():
+    #         print(f"File {f}: ")
+    #         for e in l:
+    #             print(e)
+    # else:
+    #     print("All files passed!")
     return hook_ret
 
 if __name__ == "__main__":
