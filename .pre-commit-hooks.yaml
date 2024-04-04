@@ -5,5 +5,4 @@
     description: Hook for checking proper line endings
     entry: eol-checker
     language: python
-    args: [--eol=lf]
     types: [text]
