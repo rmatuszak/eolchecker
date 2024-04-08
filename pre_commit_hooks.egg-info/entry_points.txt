@@ -1,2 +1,0 @@
-[console_scripts]
-eol-checker = pre_commit_hooks.eol_checker:main
