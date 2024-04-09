@@ -36,6 +36,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument('filenames', nargs='*', help='Filenames to check')
     args = parser.parse_args(argv)
 
+    print(f"Checking files: {args.filenames}")
+
     ftf = parse_eols(args.filenames, args.eol)
 
     hook_ret=0
@@ -45,6 +47,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         for f in ftf:
             print(f)
         hook_ret = 1
+    else:
+        print("All files passed checks!")
 
     return hook_ret
 
