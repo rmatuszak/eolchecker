@@ -11,11 +11,21 @@ CR = b'\r'
 ACCEPTED_EOLS = {'cr': CR, 'crlf': CRLF, 'lf': LF}
 
 def _get_eols_from_files(files: str) -> str:
+    """
+    Internal method used to list and process line endings using git listing command.
+    :param files: files passed to git listing
+    """
     cmd = ["git","ls-files","--eol",','.join(files)]
     eols = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding="UTF-8")
     return list(eols.stdout.split('\n'))
 
 def parse_eols(files: str, expected_eol: str) -> None:
+    """
+    Created for intepreting results from _get_eols_from_files.
+    Returns either an empty list or list of files, which not passed the check.
+    :param files: files passed to _get_eols_from_files
+    :param expected_eol: end of line expected in files for current case
+    """
     files_to_fix= []
     eols = _get_eols_from_files(files)
     pattern=re.compile("i\/(lf|crlf|mixed|none)")
@@ -35,13 +45,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     parser.add_argument('filenames', nargs='*', help='Filenames to check')
     args = parser.parse_args(argv)
-
-    print(f"Checking files: {args.filenames}")
-
     ftf = parse_eols(args.filenames, args.eol)
-
     hook_ret=0
-
     if len(ftf) > 0:
         print("Not all files passed EOL check. Please investigate below:")
         for f in ftf:
