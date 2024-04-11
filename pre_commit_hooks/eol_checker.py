@@ -17,18 +17,19 @@ def _get_eols_from_files(files: str) -> str:
     """
     cmd = ["git","ls-files","--eol",','.join(files)]
     eols = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding="UTF-8")
-    return list(eols.stdout.split('\n'))
+    return list(eols.stdout.split('\n'))[:-1]
 
-def _filter_extensions(eols: list, skip_extensions: list) -> list:
+def _filter_extensions(eols: list, skip_extensions: str) -> list:
     """
     Filtering eols from _get_eols_from_files. Rmemoved from list all files with unwanted extension.
     :param eols: eols passed from _get_eols_from_files
     :param skip_extensions: extensions to be exluded from list
     """
     filtered=[]
+    se=skip_extensions.split(";")
     for e in eols:
-        extension=e.split('\t')[1].split('.')
-        if len(extension) > 1 and extension[1] in skip_extensions:
+        ext=e.split('\t')[1].split('.')
+        if len(ext) > 1 and ext[1] in se:
             continue
         else:
             filtered.append(e)
@@ -60,8 +61,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         default='lf',
         help='Specifies the line ending to expect in files. Default is LF.',
     )
-    parser.add_argument("-se","--skip_extensions", nargs='*', help="File extensions to exlude during the check, separated with comma")
-    parser.add_argument('filenames', nargs='*', default=[], help='Filenames to check')
+    parser.add_argument("-se","--skip_extensions", nargs='*', default="", help="File extensions to exlude during the check, separated with comma")
+    parser.add_argument('filenames', nargs='*', help='Filenames to check')
     args = parser.parse_args(argv)
     ftf = parse_eols(args.filenames, args.eol, args.skip_extensions)
     hook_ret=0
