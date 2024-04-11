@@ -27,6 +27,7 @@ def _filter_extensions(eols: list, skip_extensions: str) -> list:
     """
     filtered=[]
     se=skip_extensions.split(";")
+    print(f"se: {se}")
     for e in eols:
         ext=e.split('\t')[1].split('.')
         if len(ext) > 1 and ext[1] in se:
