@@ -19,7 +19,7 @@ def _get_eols_from_files(files: str) -> str:
     eols = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding="UTF-8")
     return list(eols.stdout.split('\n'))[:-1]
 
-def parse_eols(files: str, expected_eol: str, skip_extensions: str) -> None:
+def parse_eols(files: str, expected_eol: str) -> None:
     """
     Created for intepreting results from _get_eols_from_files.
     Returns either an empty list or list of files, which not passed the check.
