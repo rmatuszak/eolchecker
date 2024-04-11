@@ -19,24 +19,6 @@ def _get_eols_from_files(files: str) -> str:
     eols = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding="UTF-8")
     return list(eols.stdout.split('\n'))[:-1]
 
-def _filter_extensions(eols: list, skip_extensions: str) -> list:
-    """
-    Filtering eols from _get_eols_from_files. Rmemoved from list all files with unwanted extension.
-    :param eols: eols passed from _get_eols_from_files
-    :param skip_extensions: extensions to be exluded from list
-    """
-    filtered=[]
-    se=skip_extensions.split(";")
-    print(f"se: {se}")
-    for e in eols:
-        ext=e.split('\t')[1].split('.')
-        if len(ext) > 1 and ext[1] in se:
-            continue
-        else:
-            filtered.append(e)
-    return filtered
-
-
 def parse_eols(files: str, expected_eol: str, skip_extensions: str) -> None:
     """
     Created for intepreting results from _get_eols_from_files.
@@ -46,9 +28,8 @@ def parse_eols(files: str, expected_eol: str, skip_extensions: str) -> None:
     """
     files_to_fix= []
     eols = _get_eols_from_files(files)
-    filtered_eols = _filter_extensions(eols, skip_extensions)
     pattern=re.compile("i\/(lf|crlf|mixed|none)")
-    for e in filtered_eols:
+    for e in eols:
         result = pattern.match(e)
         if result is not None and result.group().split('/')[1] != expected_eol:
             files_to_fix.append(e.split('\t')[1])
@@ -62,10 +43,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         default='lf',
         help='Specifies the line ending to expect in files. Default is LF.',
     )
-    parser.add_argument("-se","--skip_extensions", type=str, default="", help="File extensions to exlude during the check, separated with semicolon")
     parser.add_argument('filenames', nargs='*', help='Filenames to check')
     args = parser.parse_args(argv)
-    ftf = parse_eols(args.filenames, args.eol, args.skip_extensions)
+    ftf = parse_eols(args.filenames, args.eol)
     hook_ret=0
     if len(ftf) > 0:
         print("Not all files passed EOL check. Please investigate below:")
