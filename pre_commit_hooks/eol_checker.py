@@ -61,7 +61,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         default='lf',
         help='Specifies the line ending to expect in files. Default is LF.',
     )
-    parser.add_argument("-se","--skip_extensions", nargs='*', default="", help="File extensions to exlude during the check, separated with comma")
+    parser.add_argument("-se","--skip_extensions", type=str, default="", help="File extensions to exlude during the check, separated with semicolon")
     parser.add_argument('filenames', nargs='*', help='Filenames to check')
     args = parser.parse_args(argv)
     ftf = parse_eols(args.filenames, args.eol, args.skip_extensions)
