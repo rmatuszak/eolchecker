@@ -18,19 +18,25 @@ def generate_exact_eols(eol: str) -> None:
 
 def view_eol_file(filename: str) -> None:
     with open(filename,"rb+") as file:
-        for l in file.readlines():
-            print(l)
+        for idx,l in enumerate(file.readlines()):
+            print(f"{idx}: {l}")
 
-eol="crlf"
 
-print("MIXED EOL GENERATION")
-generate_mixed_eol_file()
+# print("MIXED EOL GENERATION")
+# generate_mixed_eol_file()
 
-print("EXACT EOL GENERATION")
-generate_exact_eols(f"{eol}")
+# print("EXACT EOL GENERATION - crlf")
+# generate_exact_eols("crlf")
+
+# eol="lf"
+# print("EXACT EOL GENERATION - lf")
+# generate_exact_eols("lf")
 
 print("TESTING MIXED")
 view_eol_file('mixed_eols')
 
-print("TESTING EXACT")
-view_eol_file(f"{eol}_eols")
+# print("TESTING EXACT - crlf")
+# view_eol_file("crlf_eols")
+
+# print("TESTING EXACT - lf")
+# view_eol_file("lf_eols")

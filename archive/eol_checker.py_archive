@@ -5,6 +5,26 @@ from typing import Sequence
 
 EOLS = {'crlf': b'\r\n', 'lf': b'\n'}
 
+# That was my version of the method
+# def check_line_expected_eol(filename: str, expected_eol: str) -> int:
+#     ret_val = 0
+#     with open(filename, 'rb') as file_obj:
+#         ltf=[]
+#         for idx, line in enumerate(file_obj):
+#             if EOLS[expected_eol] == b'\r\n' and line.endswith(EOLS[expected_eol]):
+#                 continue
+#             elif EOLS[expected_eol] == b'\n' and line.endswith(b'\r\n'):
+#                 ret_val = 1
+#                 ltf.append(str(idx))
+#             elif EOLS[expected_eol] == b'\n' and line.endswith(EOLS[expected_eol]):
+#                 continue
+#             else:
+#                 ret_val = 1
+#                 ltf.append(str(idx))
+#         file_obj.close()
+#         return ret_val,ltf
+
+# And that's how copilot (after few attempts) simplified it!
 def check_line_expected_eol(filename: str, expected_eol: str) -> int:
     ret_val = 0
     ltf = []
