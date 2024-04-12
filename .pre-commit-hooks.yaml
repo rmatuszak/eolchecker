@@ -5,4 +5,4 @@
     description: Hook for checking proper line endings
     entry: eol-checker
     language: python
-    types: [text]
+    types: [file, text]
